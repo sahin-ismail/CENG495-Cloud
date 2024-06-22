@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    }
+    </style>
+     <title>Meme Generator</title>       
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="text-align:center; font-weight:500; color: #757575; margin-top: 10px;">Meme Generator</h1>
+            <div class="row">
+                <form id="myForm" class="col-sm-6" autocomplete="off">
+                    <div class="form-group">
+                    <label for="top">Top Text:</label>
+                    <input type="text" class="form-control alphaonly" id="top" placeholder="Enter top text here">
+                    </div>
+                    <div class="form-group">
+                    <label for="bottom">Bottom Text:</label>
+                    <input type="text" class="form-control alphaonly" id="bottom" placeholder="Enter bottom text here" >
+                    </div>
+                    <div class="form-group">
+                        <label for="imageUrl">Image Url:</label>
+                        <input type="text" class="form-control" id="imageUrl" placeholder="Paste image url here">
+                    </div>
+                    <button type="button" id="buttonSave" class="btn btn-primary">Generate!</button>
+                </form>
+
+                <div id="imageBox" class="col-sm-6" style="box-shadow: 10px 5px 10px #888888;">
+                    <h3 style="text-align:center; font-weight:500; color: #757575; margin-top: 10px;">Your meme will be generated here!</h3>
+                    <h6 style="text-align:center; font-weight:400; color: #757575; margin-top: 10px;">This may take a few seconds.</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                
+            });
+            $('.alphaonly').bind('keyup blur',function(){ 
+                var node = $(this);
+                node.val(node.val().replace(/[^a-z]/g,'') ); }
+            );
+            $('#buttonSave').on('click',function(){
+
+                var request;
+                if($('#imageUrl').val()==''){
+                    alert("Image Url is required!");
+                    return;
+                }
+                request = $.ajax({
+                    url: "/input",
+                    type: "post",
+                    data: {
+                        top : $('#top').val(),
+                        bottom : $('#bottom').val(),
+                        imageUrl : $('#imageUrl').val(),
+                    }
+                });
+
+                request.done(function (response, textStatus, jqXHR){
+                    var obj = jQuery.parseJSON(response);
+                    $('#imageBox').html('<h3 style="text-align:center; font-weight:500; color: #757575; margin-top: 10px;">Meme is generated!</h3>'+
+                    '<img src="'+obj.url+'" width="50%" height="50%" class="center">');
+                    $('#top').val('');
+                    $('#bottom').val('');
+                    $('#imageUrl').val('');
+
+                });
+
+                request.fail(function (jqXHR, textStatus, errorThrown){
+                    console.error(
+                        "The following error occurred: "+
+                        textStatus, errorThrown
+                    );
+                });
+            });
+        </script>
+
+    
+    </body>
+
+</html>
+

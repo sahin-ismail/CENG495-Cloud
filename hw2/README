@@ -1,0 +1,55 @@
+Design and Development Choices
+
+While creating the application, I created an account using
+Atlas and created my MongoDB database. While writing the frontend,
+I used Html, Javascript and Css. As an additional library,
+I used Jquery to help me with the javascript codes.
+I used Bootstrap for Style edits and Stitch for database
+communication.
+
+As a design, there was no special situation in the project.
+Since Atlas does most of the work, I contacted Atlas using
+javascript and completed all the work with javascript without
+any backend such as NodeJS.
+
+********************* WARNING ***********************
+
+I used local cookies while keeping user information in the
+application. While deleting the user and logging out from
+the user, we need to delete those local cookies. Since chrome
+does not allow deleting local cookies, I made it to be compatible
+with firefox. You must use firefox when testing the application.
+Logout operation does not work in browsers other than Firefox.
+
+*******CAN USE FIREFOX OR LINK BELOW FOR TESTING**********
+
+I deployed Google App Engine because there were problems on
+different browsers regarding cookies in local. You can
+easily test it from the link below.
+
+https://staem-315022.ey.r.appspot.com/
+
+*****************************************************
+
+User’s Guide
+
+You can start the application by running the index.html file
+in the browser. When opened, a homepage will be displayed with
+a list of games and users, a navbar to switch between pages, and
+two buttons to add users and games. You can add games and users
+using these page buttons. You can remove games and users. You can
+see the comments posted on the games. You can turn off and on
+comments and rate features for games. You can login by using the
+button next to the users. After logging in, you can access the
+User Page by clicking the User Page button on the navbar.
+
+On this page you will display some information about the user.
+There is a table with games at the bottom of the page, you can play
+games using it. you can rate the games, you can see the comments about
+the games and you can comment on the games. You can open the Games
+Page by using the 'Look Games' button on this page or by clicking
+the Games Page buttons on the navbar.
+
+On this page, there is a page where the games are listed with their
+information, you can see everything here. You can log out of the user
+by using the 'Logout' button on the top right of the navbar.

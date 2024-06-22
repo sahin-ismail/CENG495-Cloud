@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Multiselect Form Input Plugin-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+    <link rel="stylesheet" href="./user.css">
+    <!-- Footer CSS -->
+    <style type="text/css">
+        .footer {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            color: maroon;
+            text-align: center;
+            background-color: rgba(0, 128, 0, 0);
+        }
+    </style>
+
+
+    <!-- Nav bar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">STAEM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="user.html">User Page<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="game.html">Games Page</a>
+                </li>
+            </ul>
+            <span class="navbar-text" id="currentUserName" style="font-size: 25px !important; margin-right: 15px">
+                Navbar text with an inline element
+            </span>
+            <!-- Logout Btn -->
+            <a id="logoutBtn" class="btn btn-danger" onclick="logoutBtnOnClick()" role="button">Logout</a>
+            <!-- Logout Btn -->
+        </div>
+    </nav>
+
+    <div class="jumbotron">
+        <h1 class="display-4">My profile</h1>
+        <p class="lead" id="profile-userName">userName placeholder</p>
+        <hr class="my-4">
+        <p class="lead text-center">Average of Ratings</p>
+        <p class="lead text-center" id="profile-averageOfRatings"></p>
+        <hr class="my-4">
+        <p class="lead text-center">Total Play Time</p>
+        <p class="lead text-center" id="profile-totalPlayTime"></p>
+        <hr class="my-4">
+        <p class="lead text-center">Most Played Game</p>
+        <p class="lead text-center" id="profile-mostPlayedGame"></p>
+        <hr class="my-4">
+        <p class="lead text-center">Comments</p>
+        <p class="lead text-center" id="profile-comments"></p>
+        <!-- Comment List Table -->
+        <div class="table-responsive" style="width:50%; text-align: center; margin-left: auto;
+        margin-right: auto;">
+            <table class="table table-dark table-striped" id='commentListTable'>
+                <thead class='thead-light'>
+                    <tr>
+                        <th scope="col">Game name</th>
+                        <th scope="col">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Comment List Table -->
+        <hr class="my-4">
+        <!-- Look Games Btn -->
+        <a class="btn btn-primary btn-lg btn-block" style="width:50%; text-align: center; margin-left: auto;
+        margin-right: auto;" href="game.html" role="button">Look Games</a>
+        <!-- Look Games Btn -->
+    </div>
+
+    <!-- Game List Table -->
+    <h1 class="text-center">Games</h1>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped" id='gameListTable'>
+            <thead class='thead-light'>
+                <tr>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Genres</th>
+                    <th scope="col">Playtime</th>
+                    <th scope="col">Comments</th>
+                    <th scope="col">Ratings and Comments Enabled</th>
+                    <th scope="col">Age Limit</th>
+                    <th scope="col">System Req.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Game List Table -->
+
+
+    <!-- Play Game Modal -->
+    <div class="modal fade" id="modalPlayGameForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Play game</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game ID</h4>
+                    <h4 id="playGameForm-gameId" class="modal-body w-20 text-center">gameId placeholder</h4>
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game name</h4>
+                    <h4 id="playGameForm-gameName" class="modal-body w-20 text-center">gameName placeholder</h4>
+                    <div class="md-form mb-5">
+                        <i class="fa fa-terminal prefix grey-text"></i>
+                        <input type="number" id="playGameForm-timePlayed" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="playGameForm-timePlayed">Time played</label>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-primary" id="playGameSubmitBtn">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Play Game Modal -->
+
+    <!-- Comment on Game Modal -->
+    <div class="modal fade" id="modalCommentOnGameForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Comment on game</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game ID</h4>
+                    <h4 id="commentOnGameForm-gameId" class="modal-body w-20 text-center">gameId placeholder</h4>
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game name</h4>
+                    <h4 id="commentOnGameForm-gameName" class="modal-body w-20 text-center">gameName placeholder</h4>
+                    <div class="md-form mb-5">
+                        <i class="fa fa-terminal prefix grey-text"></i>
+                        <input type="text" id="commentOnGameForm-comment" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="commentOnGameForm-comment">Comment</label>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-primary" id="commentOnGameSubmitBtn">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Comment on Game Modal -->
+
+    <!-- Show Comments of Game Modal -->
+    <div class="modal fade" id="modalShowCommentsOfGameForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Comments of game</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game ID</h4>
+                    <h4 id="showCommentsOfGameForm-gameId" class="modal-body w-20 text-center">gameId placeholder</h4>
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game name</h4>
+                    <h4 id="showCommentsOfGameForm-gameName" class="modal-body w-20 text-center">gameName placeholder
+                    </h4>
+                    <!-- Comment List Table -->
+                    <div class="table-responsive">
+                        <table class="table table-dark table-striped" id='modalCommentListTable'>
+                            <thead class='thead-light'>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Comment List Table -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Show Comments of Game Modal -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <!-- JS Cookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    </body>
+
+</html>
+
+
+
+<script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+<script>
+    const client = stitch.Stitch.initializeDefaultAppClient('test-app-lsuqy');
+    const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('ceng495-hw2');
+    client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user =>
+        db.collection('games').find().asArray()
+    ).then(docs => {
+        console.log("Fetched games", docs)
+        // Append games to the table
+        $.each(docs, function (key, item) {
+            $('<tr>', {
+                html: formatGameTableItem(item)
+            }).appendTo($("#gameListTable"));
+        });
+    }).catch(err => {
+        console.error(err)
+    });
+
+    getCurrentUserInfo(Cookies.get('currentUserId')).then(currentUser => {
+        if (currentUser == null) {
+            setTimeout(function () {
+                window.location.replace("index.html");
+            }, 250);
+            setTimeout(function () {
+                alert("You didn't login. Click OK to get redirected to home page.");
+            }, 1);
+
+        }
+    })
+
+
+    // Format a game object as a table item
+    function formatGameTableItem(item) {
+        // Calculate total rating of game (weighted average of all given rating points) ∑(𝑈𝑠𝑒𝑟𝑃𝑙𝑎𝑦𝑇𝑖𝑚𝑒 ∗ 𝑈𝑠𝑒𝑟𝑅𝑎𝑡𝑖𝑛𝑔 )/𝑃𝑙𝑎𝑦𝑇𝑖𝑚𝑒𝑂𝑓𝐺𝑎𝑚𝑒 ).
+        let totalRating = 0;
+        var calculateWeightedAvg = new Promise((resolve, reject) => {
+            for (let index = 0; index < item.ratings.length; index++) {
+                let userPlayTime = 0;
+                db.collection('users').findOne({
+                    "_id": new stitch.BSON.ObjectId(item.ratings[index].userId)
+                }).then(userDoc => {
+                    for (let j = 0; j < userDoc.timePlayed.length; j++) {
+                        let timePlayedObj = userDoc.timePlayed[j];
+                        console.log("timePlayedObj", timePlayedObj)
+                        if (timePlayedObj.gameId == item._id) {
+                            userPlayTime = timePlayedObj.time;
+                            console.log("time", timePlayedObj.time)
+                        }
+                    }
+                }).then(() => {
+                    let ratingPoint = userPlayTime * item.ratings[index].rating;
+                    totalRating += ratingPoint;
+                    console.log("totalRating:" + totalRating + " userPlayTime:" + userPlayTime);
+                    if (index === item.ratings.length - 1) resolve();
+                })
+            }
+        })
+
+        calculateWeightedAvg.then(() => {
+            totalRating = totalRating / item.ratings.length; // Divide by rating amount
+            console.log("totalRatingSon:" + totalRating);
+            $('#' + item._id + '-totalRating').text(totalRating);
+        })
+
+        return '<td><img src="' + item.photo +
+            '" class="img-fluid img-thumbnail" width="75" height="75"></td><td class="align-middle"> ' + item.name +
+            ' </td><td id=' + item._id + '-totalRating class="align-middle">' + totalRating +
+            '</td><td class="align-middle">' + item.genres +
+            '</td><td class="align-middle">' + item.playtime +
+            '</td><td class="align-middle"><button type="button" name="showCommentsOfGameBtn" class="btn btn-info" data-toggle="modal" data-target="#modalShowCommentsOfGameForm" data-game-id=' +
+            item._id + ' id=' +
+            item._id +
+            '>See Comments</button></td><td class="align-middle">' + item.ratingAndCommentsEnabled +
+            '</td><td class="align-middle">' + item.ageLimit +
+            '</td><td class="align-middle">' + item.systemReq +
+            '</td><td class="align-middle"><div class="row"><div class="col-md-12"><div id="stars-' + item._id +
+            '"class="stars-' + item._id +
+            '"><form action=""> <input class="star star-5" id="star5-' +
+            item._id +
+            '" type="radio" name="star" value="5"/> <label class="star star-5" for="star5-' +
+            item._id +
+            '"></label> <input class="star star-4" id="star4-' +
+            item._id +
+            '" type="radio" name="star" value="4"/> <label class="star star-4" for="star4-' +
+            item._id +
+            '"></label> <input class="star star-3" id="star3-' +
+            item._id +
+            '" type="radio" name="star" value="3"/> <label class="star star-3" for="star3-' +
+            item._id +
+            '"></label> <input class="star star-2" id="star2-' +
+            item._id +
+            '" type="radio" name="star" value="2"/> <label class="star star-2" for="star2-' +
+            item._id +
+            '"></label> <input class="star star-1" id="star1-' +
+            item._id +
+            '" type="radio" name="star" value="1"/> <label class="star star-1" for="star1-' +
+            item._id +
+            '"></label> </form></div></div></div></td><td class="align-middle"><button type="button" name="rateGameBtn" class="btn btn-primary" id=' +
+            item._id +
+            '>Rate</button></td><td class="align-middle"><button type="button" name="playGameBtn" class="btn btn-success" data-toggle="modal" data-target="#modalPlayGameForm" data-game-id=' +
+            item._id + ' id=' +
+            item._id +
+            '>Play</button></td><td class="align-middle"><button type="button" name="commentOnGameBtn" class="btn btn-info" data-toggle="modal" data-target="#modalCommentOnGameForm" data-game-id=' +
+            item._id + ' id=' +
+            item._id +
+            '>Comment</button></td>';
+    }
+
+    // Format a comment object as a table item
+    function formatCommentsTableItemModal(item) {
+        let username = db.collection('users').findOne({
+            "_id": new stitch.BSON.ObjectId(item.userId)
+        }).then(doc => {
+            item.userName = doc.name;
+            $('#' + item.userId + '-username').text(doc.name);
+        })
+
+        return '<td id=' + item.userId + '-username class="align-middle"> ' + item.userName +
+            ' </td><td class="align-middle">' + item.comment + '</td>';
+    }
+
+    // Format a comment object as a table item
+    function formatCommentsTableItem(item) {
+        let username = db.collection('games').findOne({
+            "_id": new stitch.BSON.ObjectId(item.gameId)
+        }).then(doc => {
+            item.gameName = doc.name;
+            $('#' + item.gameId + '-gamename').text(doc.name);
+        })
+
+        return '<td id=' + item.gameId + '-gamename class="align-middle"> ' + item.gameName +
+            ' </td><td class="align-middle">' + item.comment + '</td>';
+    }
+
+
+    // ------ Prepare UI Elements ------ //
+    function prepareMyProfileCard() {
+        let cookies = Cookies.get();
+
+        getCurrentUserInfo(cookies.currentUserId).then(currentUser => {
+            $('#profile-userName').text(currentUser.name);
+
+            // Calculate total rating of game (average of all given rating points)
+            currentUser.averageOfRatings = 0;
+            for (let index = 0; index < currentUser.ratings.length; index++) {
+                let ratingPoint = currentUser.ratings[index].rating;
+                currentUser.averageOfRatings += ratingPoint;
+            }
+            currentUser.averageOfRatings = currentUser.averageOfRatings / currentUser.ratings
+                .length; // Divide by rating amount
+            $('#profile-averageOfRatings').text(currentUser.averageOfRatings);
+
+            // Calculate total play time
+            currentUser.totalPlayTime = 0;
+            for (let index = 0; index < currentUser.timePlayed.length; index++) {
+                currentUser.totalPlayTime += currentUser.timePlayed[index].time;
+            }
+            $('#profile-totalPlayTime').text(currentUser.totalPlayTime);
+
+            // Calculate most played game of user
+            let mostPlayedGameId = 0;
+            var res = Math.max.apply(Math, currentUser.timePlayed.map(function (o) {
+                return o.time;
+            }))
+            var obj = currentUser.timePlayed.find(function (o) {
+                return o.time == res;
+            })
+            console.log("Most played game:", obj);
+            currentUser.mostPlayedGameName = null;
+            if (obj) {
+                let name = db.collection('games').findOne({
+                    "_id": new stitch.BSON.ObjectId(obj.gameId)
+                }).then(doc => {
+                    currentUser.mostPlayedGameName = doc.name;
+                    $('#profile-mostPlayedGame').text(doc.name);
+                })
+            } else { // If user haven't played any game before
+                $('#profile-mostPlayedGame').text("N/A");
+            }
+
+            //$('#profile-comments').text(currentUser.comments);
+            db.collection('users').findOne({
+                "_id": new stitch.BSON.ObjectId(cookies.currentUserId)
+            }).then(doc => {
+                // Populate comments table
+                doc.timePlayed.sort((a, b) => b.time-a.time);
+                $.each(doc.timePlayed, function (key, item) {
+                    var temp;
+                    if(isIn(item.gameId,doc.comments) != -1){
+                        temp = isIn(item.gameId,doc.comments);
+                        $('<tr>', {
+                        html: formatCommentsTableItem(temp)
+                    }).appendTo($("#commentListTable"));
+                    }
+                });
+
+            });
+        })
+    }
+
+    // ------ CRUD operations ------ //
+    function getCurrentUserInfo(userId) {
+        // (Returns promise)
+        return db.collection('users').findOne({
+            "_id": new stitch.BSON.ObjectId(userId)
+        })
+    }
+
+    function commentOnGame(gameId, userId, commentMsg) {
+        client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user => {
+            // Check if comments are enabled for the game
+            db.collection('games').findOne({
+                "_id": new stitch.BSON.ObjectId(gameId)
+            }).then(game => {
+                if (!game.ratingAndCommentsEnabled) {
+                    alert("Comments are disabled for the game you've selected!");
+                    return; // Alert user and stop the function if ratings are disabled
+                } else {
+                    // Check if the user has played the game before
+                    getCurrentUserInfo(Cookies.get('currentUserId')).then(currentUser => {
+                        let hasPlayedGame = false;
+                        for (let index = 0; index < currentUser.timePlayed.length; index++) {
+                            if (currentUser.timePlayed[index].gameId == gameId) {
+                                console.log("User has played the game before with gameId",
+                                    gameId)
+                                hasPlayedGame = true;
+                            }
+                        }
+                        if (hasPlayedGame) { // Check if user has commented of game before
+                            let hasCommentedOnGame = false;
+                            for (let index = 0; index < currentUser.comments.length; index++) {
+                                if (currentUser.comments[index].gameId == gameId) {
+                                    console.log(
+                                        "User has commented on the game before with gameId",
+                                        gameId)
+                                    hasCommentedOnGame = true;
+                                }
+                            }
+                            if (hasCommentedOnGame) { // Update previous comment
+                                client.auth.loginWithCredential(new stitch
+                                    .AnonymousCredential()).then(user => {
+                                    db.collection('games').updateOne({
+                                        "_id": new stitch.BSON.ObjectId(gameId),
+                                        "comments.userId": userId
+                                    }, {
+                                        $set: {
+                                            "comments.$.comment": commentMsg
+                                        }
+                                    })
+                                    db.collection('users').updateOne({
+                                        "_id": new stitch.BSON.ObjectId(userId),
+                                        "comments.gameId": gameId
+                                    }, {
+                                        $set: {
+                                            "comments.$.comment": commentMsg
+                                        }
+                                    }).then(() => location.reload())
+                                })
+
+                            } else { // Insert new comment
+                                db.collection('games').updateOne({
+                                    "_id": new stitch.BSON.ObjectId(gameId)
+                                }, {
+                                    $push: {
+                                        "comments": {
+                                            "gameId": gameId,
+                                            "userId": userId,
+                                            "comment": commentMsg
+                                        }
+                                    }
+                                }).then(() => {
+                                    db.collection('users').updateOne({
+                                        "_id": new stitch.BSON.ObjectId(userId)
+                                    }, {
+                                        $push: {
+                                            "comments": {
+                                                "gameId": gameId,
+                                                "userId": userId,
+                                                "comment": commentMsg
+                                            }
+                                        }
+                                    }).then(() => location.reload())
+                                })
+
+                            }
+                        } else { // Users can't comment on games they haven't played
+                            alert("You didn't play the game yet!")
+                        }
+                    })
+                }
+
+
+            })
+        })
+
+    }
+
+    function playGame(gameId, timePlayed) {
+        // Increment playtime of game in 'games' table
+        client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user => {
+            db.collection('games').updateOne({
+                "_id": new stitch.BSON.ObjectId(gameId)
+            }, {
+                $inc: {
+                    "playtime": timePlayed
+                }
+            })
+            // Increment playtime of user in 'users' table
+            // Check if the user has played the game before
+            getCurrentUserInfo(Cookies.get('currentUserId')).then(currentUser => {
+                let hasPlayedGame = false;
+                for (let index = 0; index < currentUser.timePlayed.length; index++) {
+                    if (currentUser.timePlayed[index].gameId == gameId) {
+                        console.log("User has played the game before with gameId", gameId)
+                        hasPlayedGame = true;
+                    }
+                }
+                if (hasPlayedGame) { // Increment existing playtime of user
+                    db.collection('users').updateOne({
+                        "_id": new stitch.BSON.ObjectId(Cookies.get('currentUserId')),
+                        "timePlayed.gameId": gameId
+                    }, {
+                        $inc: {
+                            "timePlayed.$.time": timePlayed
+                        }
+                    }).then(() => location.reload())
+                } else { // Insert new playtime value to user
+                    console.log("User hasn't played the game before with gameId", gameId)
+                    db.collection('users').updateOne({
+                        "_id": new stitch.BSON.ObjectId(Cookies.get('currentUserId'))
+                    }, {
+                        $push: {
+                            "timePlayed": {
+                                "gameId": gameId,
+                                "time": Number(timePlayed)
+                            }
+                        }
+                    }).then(() => location.reload()) // Refresh page after transaction gets done
+
+                }
+            })
+        })
+    }
+
+    function rateGame(gameId, userId, ratingValue) {
+        client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user =>
+            db.collection('games').findOne({
+                "_id": new stitch.BSON.ObjectId(gameId)
+            }).then(doc => {
+                if (!doc.ratingAndCommentsEnabled) { // Check if ratings and comments are enabled
+                    alert("Ratings are disabled for the game you've selected!");
+                    return; // Alert user and stop the function if ratings are disabled
+                } else {
+                    getCurrentUserInfo(Cookies.get('currentUserId')).then(currentUser => {
+                        if (currentUser == null) {
+                            alert("You didn't login!");
+                            return; // Alert user and stop the function the user didn't login
+                        }
+                        // Check if user had played the game before
+                        let hasPlayedGame = false;
+                        for (let index = 0; index < currentUser.timePlayed.length; index++) {
+                            if (currentUser.timePlayed[index].gameId == gameId) {
+                                console.log("User has played the game before with gameId", gameId)
+                                hasPlayedGame = true;
+                            }
+                        }
+                        if (!hasPlayedGame) {
+                            alert("You didn't play the game yet!");
+                            return; // Alert user and stop the function the user didn't play the game yet
+                        }
+                        // Check if the user has rated the game before
+                        let hasRatedGame = false;
+                        for (let index = 0; index < currentUser.ratings.length; index++) {
+                            if (currentUser.ratings[index].gameId == gameId) {
+                                console.log("User has rated the game before with gameId", gameId)
+                                hasRatedGame = true;
+                            }
+
+                        }
+                        if (hasRatedGame) { // Update existing rating given by user
+                            client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(
+                                user => {
+                                    db.collection('users').updateOne({
+                                        "_id": new stitch.BSON.ObjectId(Cookies.get(
+                                            'currentUserId')),
+                                        "ratings.gameId": gameId
+                                    }, {
+                                        $set: {
+                                            "ratings.$.rating": Number(ratingValue)
+                                        }
+                                    }).then(() => {
+                                        db.collection('games').updateOne({
+                                            "_id": new stitch.BSON.ObjectId(gameId),
+                                            "ratings.userId": userId
+                                        }, {
+                                            $set: {
+                                                "ratings.$.rating": Number(
+                                                    ratingValue)
+                                            }
+                                        }).then(() => location.reload())
+                                    })
+                                })
+                        } else { // Insert new rating value if none exists
+                            client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(
+                                user =>
+                                db.collection('games').updateOne({
+                                    "_id": new stitch.BSON.ObjectId(gameId)
+                                }, {
+                                    $push: {
+                                        "ratings": {
+                                            "userId": userId,
+                                            "rating": Number(ratingValue)
+                                        }
+                                    }
+                                }),
+                            ).then(() => {
+                                client.auth.loginWithCredential(new stitch
+                                    .AnonymousCredential()).then(() =>
+                                    db.collection('users').updateOne({
+                                        "_id": new stitch.BSON.ObjectId(userId)
+                                    }, {
+                                        $push: {
+                                            "ratings": {
+                                                "gameId": gameId,
+                                                "rating": Number(ratingValue)
+                                            }
+                                        }
+                                    }),
+                                ).then(() => location
+                                    .reload()) // Refresh page after transaction gets done
+                            })
+
+                        }
+                    })
+                }
+            }));
+    }
+
+    // Fetch game by id, set true to ratingAndCommentsEnabled field if its false and vice versa
+    function toggleRatingAndComments(gameId) {
+        client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user =>
+            db.collection('games').findOne({
+                "_id": new stitch.BSON.ObjectId(gameId)
+            }).then(doc =>
+                db.collection('games').updateOne({
+                    "_id": new stitch.BSON.ObjectId(gameId)
+                }, {
+                    $set: {
+                        ratingAndCommentsEnabled: !doc.ratingAndCommentsEnabled
+                    }
+                }, {
+                    upsert: true
+                })
+            )).then(() => location.reload()) // Refresh page after transaction gets done
+    }
+
+
+    // ------ Button onClick handlers ------ //
+    // 'Rate Game' button handler 
+    // We have to select parent first since the buttons are dynamically generated
+    $(function () {
+        $(document).on("click", 'button[name="rateGameBtn"]', function (e) {
+            $("#stars-" + e.target.id + " input[type=radio]:checked").each(function () {
+                rateGame(e.target.id, Cookies.get('currentUserId'), this.value);
+            });
+        });
+    });
+
+    // Triggered when modal is about to be shown
+    $('#modalShowCommentsOfGameForm').on('show.bs.modal', function (e) {
+
+        // get data-game-id attribute of the clicked element
+        var gameId = $(e.relatedTarget).data('game-id');
+
+        console.log("Fetching game information with id:", gameId);
+        db.collection('games').findOne({
+            "_id": new stitch.BSON.ObjectId(gameId)
+        }).then(doc => {
+            $(e.currentTarget).find('#showCommentsOfGameForm-gameName').html(doc.name);
+            // Clear modal table
+            $("#modalCommentListTable tbody").html('');
+            // Populate comments table
+            db.collection('users').find().asArray()
+            .then(users => {
+                $.each(doc.comments, function (key, item) {
+                    $.each(users, function (userkey, u) {
+                        if(item.userId == u._id){
+                            item.time = getTime(item.gameId,u.timePlayed);
+                        }
+
+                    });
+                });      
+                doc.comments.sort((a, b) => b.time - a.time);
+                $.each(doc.comments, function (key, item) {
+                console.log("comment:", item)
+                $('<tr>', {
+                    html: formatCommentsTableItemModal(item)
+                }).appendTo($("#modalCommentListTable"));
+            });
+            });
+        });
+
+        // populate the gameId textbox on the modal
+        $(e.currentTarget).find('#showCommentsOfGameForm-gameId').html(gameId);
+    });
+
+    // Triggered when modal is about to be shown
+    $('#modalCommentOnGameForm').on('show.bs.modal', function (e) {
+
+        // get data-game-id attribute of the clicked element
+        var gameId = $(e.relatedTarget).data('game-id');
+
+        console.log("Fetching game information with id:", gameId);
+        db.collection('games').findOne({
+            "_id": new stitch.BSON.ObjectId(gameId)
+        }).then(doc => {
+            $(e.currentTarget).find('#commentOnGameForm-gameName').html(doc.name);
+        });
+
+        // populate the gameId textbox on the modal
+        $(e.currentTarget).find('#commentOnGameForm-gameId').html(gameId);
+    });
+
+    // Triggered when modal is about to be shown
+    $('#modalPlayGameForm').on('show.bs.modal', function (e) {
+
+        //get data-game-id attribute of the clicked element
+        var gameId = $(e.relatedTarget).data('game-id');
+
+        console.log("Fetching game information with id:", gameId);
+        db.collection('games').findOne({
+            "_id": new stitch.BSON.ObjectId(gameId)
+        }).then(doc => {
+            $(e.currentTarget).find('#playGameForm-gameName').html(doc.name);
+        });
+
+        //populate the gameId textbox on the modal
+        $(e.currentTarget).find('#playGameForm-gameId').html(gameId);
+    });
+
+    // Handler for the submit button on playGameModal
+    $('#commentOnGameSubmitBtn').on('click', function (e) {
+        let gameId = $('#commentOnGameForm-gameId').html();
+        let commentMsg = $('#commentOnGameForm-comment').val();
+        commentOnGame(gameId, Cookies.get('currentUserId'), commentMsg);
+    })
+
+    // Handler for the submit button on playGameModal
+    $('#playGameSubmitBtn').on('click', function (e) {
+        let gameId = $('#playGameForm-gameId').html();
+        let timePlayed = $('#playGameForm-timePlayed').val();
+        playGame(gameId, Number(timePlayed));
+    })
+
+    // Retrieve and show currentUserName from cookies
+    $(document).ready(function () {
+        let cookies = Cookies.get();
+        if (cookies.currentUserName == undefined) {
+            $('#currentUserName').text("");
+            $('#logoutBtn').css("visibility", "hidden")
+        } else {
+            $('#currentUserName').text("Logged in as " + cookies.currentUserName);
+        }
+
+        var multipleCancelButton = new Choices('#addGameForm-genres', {
+            removeItemButton: true,
+            maxItemCount: 5,
+            searchResultLimit: 10,
+            renderChoiceLimit: 10
+        });
+
+        prepareMyProfileCard();
+    });
+
+
+    // ------ Util Functions ------ //
+
+    // Deletes all cookies in all paths (https://stackoverflow.com/questions/179355/clearing-all-cookies-with-javascript)
+    function deleteAllCookies() {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
+    function deleteAllCookiesLogout() {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+        location.reload();
+    }
+
+    function logoutBtnOnClick() {
+        deleteAllCookiesLogout();
+    }
+    
+    function isIn(a,array){
+        for (let index = 0; index < array.length; index++) {
+            if(a == array[index].gameId){
+                return array[index];
+            }
+        }
+        return -1;
+    }
+
+    function getTime(id,arr){
+        var result;
+        $.each(arr, function (userkey, user) {
+            if(user.gameId == id){
+                result =  user.time;
+            }
+        });
+        return result;
+    }
+
+</script>

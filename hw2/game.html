@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Multiselect Form Input Plugin-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+    <link rel="stylesheet" href="./user.css">
+    <!-- Footer CSS -->
+    <style type="text/css">
+        .footer {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            color: maroon;
+            text-align: center;
+            background-color: rgba(0, 128, 0, 0);
+        }
+    </style>
+
+
+    <!-- Nav bar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">STAEM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="user.html">User Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="game.html">Games Page<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <span class="navbar-text" id="currentUserName" style="font-size: 25px !important; margin-right: 15px">
+                Navbar text with an inline element
+            </span>
+            <!-- Logout Btn -->
+            <a id="logoutBtn" class="btn btn-danger" onclick="logoutBtnOnClick()" role="button">Logout</a>
+            <!-- Logout Btn -->
+        </div>
+    </nav>
+
+    <!-- Game List Table -->
+    <h1 class="text-center">Games</h1>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped" id='gameListTable'>
+            <thead class='thead-light'>
+                <tr>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Genres</th>
+                    <th scope="col">Playtime</th>
+                    <th scope="col">Comments</th>
+                    <th scope="col">Ratings and Comments Enabled</th>
+                    <th scope="col">Age Limit</th>
+                    <th scope="col">System Req.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Game List Table -->
+
+
+
+    <!-- Show Comments of Game Modal -->
+    <div class="modal fade" id="modalShowCommentsOfGameForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Comments of game</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game ID</h4>
+                    <h4 id="showCommentsOfGameForm-gameId" class="modal-body w-20 text-center">gameId placeholder</h4>
+                    <h4 class="modal-title w-20 font-weight-bold text-center">Game name</h4>
+                    <h4 id="showCommentsOfGameForm-gameName" class="modal-body w-20 text-center">gameName placeholder
+                    </h4>
+                    <!-- Comment List Table -->
+                    <div class="table-responsive">
+                        <table class="table table-dark table-striped" id='modalCommentListTable'>
+                            <thead class='thead-light'>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Comment List Table -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Show Comments of Game Modal -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+    <!-- JS Cookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    </body>
+
+</html>
+
+
+
+<script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+<script>
+    const client = stitch.Stitch.initializeDefaultAppClient('test-app-lsuqy');
+    const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('ceng495-hw2');
+    client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user =>
+        db.collection('games').find().asArray()
+    ).then(docs => {
+        console.log("Fetched games", docs)
+        // Append games to the table
+        $.each(docs, function (key, item) {
+            $('<tr>', {
+                html: formatGameTableItem(item)
+            }).appendTo($("#gameListTable"));
+        });
+    }).catch(err => {
+        console.error(err)
+    });
+
+
+    // Format a game object as a table item
+    function formatGameTableItem(item) {
+
+        // Calculate total rating of game (weighted average of all given rating points) ∑(𝑈𝑠𝑒𝑟𝑃𝑙𝑎𝑦𝑇𝑖𝑚𝑒 ∗ 𝑈𝑠𝑒𝑟𝑅𝑎𝑡𝑖𝑛𝑔 )/𝑃𝑙𝑎𝑦𝑇𝑖𝑚𝑒𝑂𝑓𝐺𝑎𝑚𝑒 ).
+        let totalRating = 0;
+        var calculateWeightedAvg = new Promise((resolve, reject) => {
+            for (let index = 0; index < item.ratings.length; index++) {
+                let userPlayTime = 0;
+                db.collection('users').findOne({
+                    "_id": new stitch.BSON.ObjectId(item.ratings[index].userId)
+                }).then(userDoc => {
+                    for (let j = 0; j < userDoc.timePlayed.length; j++) {
+                        let timePlayedObj = userDoc.timePlayed[j];
+                        console.log("timePlayedObj", timePlayedObj)
+                        if (timePlayedObj.gameId == item._id) {
+                            userPlayTime = timePlayedObj.time;
+                            console.log("time", timePlayedObj.time)
+                        }
+                    }
+                }).then(() => {
+                    let ratingPoint = userPlayTime * item.ratings[index].rating;
+                    totalRating += ratingPoint;
+                    console.log("totalRating:" + totalRating + " userPlayTime:" + userPlayTime);
+                    if (index === item.ratings.length - 1) resolve();
+                })
+
+            }
+
+        })
+
+        calculateWeightedAvg.then(() => {
+            totalRating = totalRating / item.ratings.length; // Divide by rating amount
+            console.log("totalRatingSon:" + totalRating);
+            $('#' + item._id + '-totalRating').text(totalRating);
+        })
+
+
+        return '<td class="w-10"><img src="' + item.photo +
+            '" class="img-fluid img-thumbnail" width="75" height="75"></td><td class="align-middle"> ' + item.name +
+            ' </td><td id=' + item._id + '-totalRating class="align-middle">' + totalRating +
+            '</td><td class="align-middle">' + item.genres +
+            '</td><td class="align-middle">' + item.playtime +
+            '</td><td class="align-middle"><button type="button" name="showCommentsOfGameBtn" class="btn btn-info" data-toggle="modal" data-target="#modalShowCommentsOfGameForm" data-game-id=' +
+            item._id + ' id=' +
+            item._id +
+            '>See Comments</button></td><td class="align-middle">' + item.ratingAndCommentsEnabled +
+            '</td><td class="align-middle">' + item.ageLimit +
+            '</td><td class="align-middle">' + item.systemReq +
+            '</td>';
+    }
+
+    // Format a comment object as a table item
+    function formatCommentsTableItemModal(item) {
+        let username = db.collection('users').findOne({
+            "_id": new stitch.BSON.ObjectId(item.userId)
+        }).then(doc => {
+            item.userName = doc.name;
+            $('#' + item.userId + '-username').text(doc.name);
+        })
+
+        return '<td id=' + item.userId + '-username class="align-middle"> ' + item.userName +
+            ' </td><td class="align-middle">' + item.comment + '</td>';
+    }
+
+    // ------ Prepare UI Elements ------ //
+
+    // ------ CRUD operations ------ //
+    function getCurrentUserInfo(userId) {
+        // (Returns promise)
+        return db.collection('users').findOne({
+            "_id": new stitch.BSON.ObjectId(userId)
+        })
+    }
+
+
+    // ------ Button onClick handlers ------ //
+
+    // Triggered when modal is about to be shown
+    $('#modalShowCommentsOfGameForm').on('show.bs.modal', function (e) {
+
+        // get data-game-id attribute of the clicked element
+        var gameId = $(e.relatedTarget).data('game-id');
+
+        console.log("Fetching game information with id:", gameId);
+        db.collection('games').findOne({
+            "_id": new stitch.BSON.ObjectId(gameId)
+        }).then(doc => {
+            $(e.currentTarget).find('#showCommentsOfGameForm-gameName').html(doc.name);
+            // Clear modal table
+            $("#modalCommentListTable tbody").html('');
+            // Populate comments table
+            db.collection('users').find().asArray()
+            .then(users => {
+                $.each(doc.comments, function (key, item) {
+                    $.each(users, function (userkey, u) {
+                        if(item.userId == u._id){
+                            item.time = getTime(item.gameId,u.timePlayed);
+                        }
+
+                    });
+                });      
+                doc.comments.sort((a, b) => b.time - a.time);
+                $.each(doc.comments, function (key, item) {
+                console.log("comment:", item)
+                $('<tr>', {
+                    html: formatCommentsTableItemModal(item)
+                }).appendTo($("#modalCommentListTable"));
+            });
+            });
+        });
+
+        // populate the gameId textbox on the modal
+        $(e.currentTarget).find('#showCommentsOfGameForm-gameId').html(gameId);
+    });
+
+    function getTime(id,arr){
+        var result;
+        $.each(arr, function (userkey, user) {
+            if(user.gameId == id){
+                result =  user.time;
+            }
+        });
+        return result;
+    }
+
+    function isIn(a, array) {
+        for (let index = 0; index < array.length; index++) {
+            if (a == array[index].gameId) {
+                return array[index];
+            }
+        }
+        return -1;
+    }
+
+
+
+    // Retrieve and show currentUserName from cookies
+    $(document).ready(function () {
+        let cookies = Cookies.get();
+        if (cookies.currentUserName == undefined) {
+            $('#currentUserName').text("");
+            $('#logoutBtn').css("visibility", "hidden")
+        } else {
+            $('#currentUserName').text("Logged in as " + cookies.currentUserName);
+        }
+    });
+
+
+    // ------ Util Functions ------ //
+
+    // Deletes all cookies in all paths (https://stackoverflow.com/questions/179355/clearing-all-cookies-with-javascript)
+    function deleteAllCookies() {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
+
+    function deleteAllCookiesLogout() {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+        location.reload();
+    }
+
+    function logoutBtnOnClick() {
+        deleteAllCookiesLogout();
+    }
+</script>
